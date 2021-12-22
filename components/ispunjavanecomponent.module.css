@@ -1,0 +1,14 @@
+.scaleInputItem { 
+    display: block;
+    text-align: center;
+    margin-bottom: 50px;
+}
+.questionRadio {
+    display: block;
+    margin: 0 auto;
+}
+.scaleInputRadioItem {
+    display: inline-flex;
+    flex-direction: column-reverse;
+    margin: 0 10px;
+}

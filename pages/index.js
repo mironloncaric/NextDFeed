@@ -1,12 +1,48 @@
-import Layout from '../components/layout'
+import { useEffect } from "react";
+import Link from "next/link";
+import Layout from "../components/layout.js";
+import { useToken } from "../components/tokencontext.js";
+import image from "../landing-page.jpg";
+import { scales } from "../scales.js";
+import Image from "next/image";
 
-export default function Page () {
+export default function LandingPage() {
+  const { createToken } = useToken();
+  useEffect(() => {
+    createToken(null);
+  }, []);
+  const list = Object.keys(scales);
   return (
-    <Layout>
-      <h1>NextAuth.js Example</h1>
-      <p>
-        This is an example site to demonstrate how to use <a href={`https://next-auth.js.org`}>NextAuth.js</a> for authentication.
-      </p>
-    </Layout>
-  )
+    <>
+      <div className="landing-page-poster">
+        <Image layout="fill" src={image} />
+        <div className="info">
+          <h3 className="title">Data Feedback HR</h3>
+          <hr />
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum
+            gravida fringilla odio, eget pharetra neque condimentum sit amet.
+            Orci varius natoque penatibus et magnis dis parturient montes,
+            nascetur ridiculus mus. Aenean maximus diam sit amet commodo
+            hendrerit. Nam porta metus et turpis consequat pulvinar. Etiam sed
+            varius nulla. Mauris ut.
+          </p>
+        </div>
+      </div>
+
+      <div className="items-grid">
+        {list.map((key, index) => (
+          <div key={index} className="item">
+            <h3>{scales[key].skalaIme}</h3>
+            <div>
+              <Link href={`/ispunjavanje/${scales[key].url}`}>
+                Ispunjavanje
+              </Link>
+              <Link href={`/upisivanje/${scales[key].url}`}>Upisivanje</Link>
+            </div>
+          </div>
+        ))}
+      </div>
+    </>
+  );
 }

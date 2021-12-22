@@ -1,14 +1,16 @@
-import Header from '../components/header'
-import Footer from '../components/footer'
+import { useEffect } from "react";
+import { useSession } from "next-auth/react";
 
-export default function Layout ({children}) {
+import Navbar from "./navbar.js";
+import Footer from "./footer.js";
+
+export default function Layout({ children }) {
+  const { data: session } = useSession();
   return (
     <>
-      <Header/>
-      <main>
-        {children}
-      </main>
-      <Footer/>
+      <Navbar />
+      <main style={{ minHeight: "75vh" }}>{children}</main>
+      <Footer />
     </>
-  )
+  );
 }

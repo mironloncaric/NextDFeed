@@ -4,16 +4,16 @@ import { SessionProvider } from "next-auth/react";
 import index from "./index.js";
 import "../components/global.css";
 import Layout from "../components/layout.js";
-import { TokenProvider } from "../components/tokencontext.js";
+import { AuthProvider } from "../components/authcontext.js";
 
 export default function App({ Component, pageProps }) {
   return (
     <SessionProvider>
-      <TokenProvider>
+      <AuthProvider>
         <Layout>
           <Component {...pageProps} />
         </Layout>
-      </TokenProvider>
+      </AuthProvider>
     </SessionProvider>
   );
 }
