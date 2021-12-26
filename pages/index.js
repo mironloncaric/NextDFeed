@@ -5,11 +5,14 @@ import { useToken } from "../components/tokencontext.js";
 import image from "../landing-page.jpg";
 import { scales } from "../scales.js";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 
 export default function LandingPage() {
   const { createToken } = useToken();
+  const { data } = useSession();
   useEffect(() => {
     createToken(null);
+    console.log(data);
   }, []);
   const list = Object.keys(scales);
   return (

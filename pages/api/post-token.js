@@ -8,10 +8,11 @@ export default async function postToken(req, res) {
     const token = await tokens.findOne({ userToken });
     const url = token.sums[0];
     await tokens.updateOne({ _id: token._id }, { $pop: { sums: -1 } });
-    if (req.body.sums) {
+    if (sums) {
+      console.log(sums);
       await tokens.updateOne(
         { _id: token._id },
-        { $push: { results: { sums: req.body.sums, name } } }
+        { $push: { results: { sums, name } } }
       );
     }
     if (url) return res.redirect(301, `/ispunjavanje/${url}`);

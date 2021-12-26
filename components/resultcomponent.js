@@ -7,18 +7,29 @@ export default function ResultComponent(props) {
     <div className="page-container">
       <h1>{props.scale.skalaIme}</h1>
       {Object.keys(granice).map((item, key) => {
-        if (props.propsSums[key] < granice[item][0]) return <p>Prvi slučaj</p>;
+        if (props.propsSums[key] < granice[item][0])
+          return (
+            <p key={item}>
+              Vaš rezultat je ispodprosječan i spada u prvi kvartil rezultata
+              (25% najnižih rezultata za ispitanike vašeg spola i dobi)
+            </p>
+          );
         else if (
-          props.propsSums[key] > granice[item][0] &&
-          props.propsSums[key] < granice[item][1]
+          props.propsSums[key] >= granice[item][0] &&
+          props.propsSums[key] <= granice[item][2]
         )
-          return <p>Drugi slučaj</p>;
-        else if (
-          props.propsSums[key] > granice[item][1] &&
-          props.propsSums[key] < granice[item][2]
-        )
-          return <p>Treći slučaj</p>;
-        return <p>Četvrti slučaj</p>;
+          return (
+            <p key={item}>
+              Važ rezultat je prosječan i spada u srednjih 50% rezultata (26. -
+              74. percentil)
+            </p>
+          );
+        return (
+          <p key={item}>
+            Važ rezultat je iznadprosječan i spada u četvrti kvartil rezultata
+            (25% najviših rezultata za ispitanike vašeg spola i dobi)
+          </p>
+        );
       })}
       <Bar
         datasetIdKey="id"
@@ -28,25 +39,18 @@ export default function ResultComponent(props) {
             {
               label: "Prosiječni rezultat",
               data: props.propsSums,
+              backgroundColor: "lightblue",
             },
             {
               label: "Rezultati",
               data: Object.keys(granice).map((key, item) => granice[key][1]),
+              backgroundColor: "beige",
             },
           ],
         }}
         options={{
           indexAxis: "y",
           aspectRatio: 1.1,
-          scales: {
-            yAxes: [
-              {
-                ticks: {
-                  fontSize: 7,
-                },
-              },
-            ],
-          },
         }}
       />{" "}
     </div>

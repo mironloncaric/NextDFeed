@@ -992,6 +992,7 @@ export const scales = {
       ASE1: [5, 6, 7, 8],
       ASE2: [1, 2, 3, 4],
     },
+    skale: ["ASE1", "ASE2"],
   },
   MOST: {
     url: "MOST",

@@ -28,6 +28,7 @@ export default function Ispunjavanje() {
         setPropsGender={setPropsGender}
         setPropsAge={setPropsAge}
         setPropsSums={setPropsSums}
+        propsSums={propsSums}
       />
     ) : (
       <div>Waiting...</div>

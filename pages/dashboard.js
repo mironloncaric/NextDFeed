@@ -11,6 +11,8 @@ export default function Dashboard(props) {
   const [sums, setSums] = useState({});
   const [name, setName] = useState("");
   const [n, setN] = useState(1);
+  const [clusters, setClusters] = useState([]);
+  const [tokens, setTokens] = useState([]);
 
   useEffect(() => {
     console.log("lol");
@@ -19,10 +21,32 @@ export default function Dashboard(props) {
     })
       .then((res) => res.json())
       .then((response) => {
-        console.log(response);
+        setClusters(response);
+        response.forEach((item, key) => {
+          fetch("/api/get-tokens", {
+            method: "POST",
+            credentials: "same-origin",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ tokens: item.tokens }),
+          })
+            .then((res) => res.json())
+            .then((response) => {
+              console.log(response, key);
+              const temp = tokens.split();
+              temp[key] = response;
+              setTokens(temp);
+            })
+            .catch((err) => console.log(err));
+        });
       })
       .catch((err) => console.log(err));
   }, []);
+
+  useEffect(() => {
+    console.log(tokens);
+  }, [tokens]);
 
   if (status === "loading") {
     return <p>loading...</p>;
@@ -110,6 +134,17 @@ export default function Dashboard(props) {
       >
         Submit
       </button>
+      <br />
+      <div>
+        {clusters &&
+          clusters.length > 0 &&
+          clusters.map((cluster, key) => (
+            <div key={key}>
+              <h3>{cluster.name}</h3>
+              <span>{key}</span>
+            </div>
+          ))}
+      </div>
     </div>
   );
 }

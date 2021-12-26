@@ -12,3 +12,17 @@
     flex-direction: column-reverse;
     margin: 0 10px;
 }
+.upisInput {
+    display: flex;
+    font-size: 12px;
+    margin: 0 0;
+    justify-content: space-between;
+    align-items: center;
+}
+.upisInputTitle {
+    margin: 10px 0;
+}
+.upisInputResult {
+    width: 50px;
+    height: 22px;
+}
