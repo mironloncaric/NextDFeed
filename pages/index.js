@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import Layout from "../components/layout.js";
-import { useToken } from "../components/tokencontext.js";
 import image from "../landing-page.jpg";
 import { scales } from "../scales.js";
 import Image from "next/image";
