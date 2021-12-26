@@ -39,8 +39,7 @@ export default function ResultComponent(props) {
       <div
         style={{
           height: "auto",
-          maxWidth: "500px",
-          minHeight: "900px",
+          maxWidth: "400px",
           margin: "0 auto",
         }}
       >
@@ -56,17 +55,30 @@ export default function ResultComponent(props) {
                 ),
                 backgroundColor: Object.keys(granice).map(
                   (key, index) =>
-                    (props.propsSums[index] < granice[key][1] && "red") ||
-                    (props.propsSums[index] > granice[key][1] && "green") ||
-                    "lightblue"
+                    (props.propsSums[index] < granice[key][1] &&
+                      "rgba(255, 99, 132, 0.2)") ||
+                    (props.propsSums[index] > granice[key][1] &&
+                      "rgba(75, 192, 192, 0.2)") ||
+                    "rgba(255, 206, 86, 0.2)"
                 ),
+                borderColor: Object.keys(granice).map(
+                  (key, index) =>
+                    (props.propsSums[index] < granice[key][1] &&
+                      "rgba(255,99,132,1)") ||
+                    (props.propsSums[index] > granice[key][1] &&
+                      "rgba(75, 192, 192, 1)") ||
+                    "rgba(54, 162, 235, 1)"
+                ),
+                borderWidth: 1,
               },
               {
                 label: "Prosječni rezultati",
                 data: Object.keys(granice).map(
                   (key, index) => granice[key][1] / n_skala[key]
                 ),
-                backgroundColor: "beige",
+                backgroundColor: "rgba(255, 206, 86, 0.2)",
+                borderColor: "rgba(255, 206, 86, 1)",
+                borderWidth: 1,
               },
             ],
           }}
@@ -74,12 +86,8 @@ export default function ResultComponent(props) {
             indexAxis: "y",
             aspectRatio: 1.5,
             maintainAspectRatio: true,
-            scales: {
-              yAxes: {
-                ticks: {
-                  fontSize: 5,
-                },
-              },
+            font: {
+              size: 5,
             },
           }}
         />{" "}
