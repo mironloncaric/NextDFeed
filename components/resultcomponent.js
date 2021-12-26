@@ -50,6 +50,7 @@ export default function ResultComponent(props) {
             datasets: [
               {
                 label: "Rezultati",
+                yAxisID: "yAxis",
                 data: Object.keys(granice).map(
                   (key, index) => props.propsSums[index] / n_skala[key]
                 ),
@@ -86,8 +87,14 @@ export default function ResultComponent(props) {
             indexAxis: "y",
             aspectRatio: 1.5,
             maintainAspectRatio: true,
-            font: {
-              size: 5,
+            scales: {
+              yAxis: {
+                ticks: {
+                  font: {
+                    size: 9,
+                  },
+                },
+              },
             },
           }}
         />{" "}
