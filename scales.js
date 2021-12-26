@@ -993,6 +993,10 @@ export const scales = {
       ASE2: [1, 2, 3, 4],
     },
     skale: ["ASE1", "ASE2"],
+    n_skala: {
+      ASE1: 4,
+      ASE2: 4,
+    },
   },
   MOST: {
     url: "MOST",
@@ -1106,6 +1110,14 @@ export const scales = {
       MSU3: [10, 11, 12, 13, 14, 15],
       MSS1: [20, 21, 22, 23, 24],
       MSS2: [6, 7, 8, 9],
+    },
+    skale: ["MSU1", "MSU2", "MSU3", "MSS1", "MSS2"],
+    n_skala: {
+      MSU1: 4,
+      MSU2: 5,
+      MSU3: 6,
+      MSS1: 5,
+      MSS2: 4,
     },
   },
 };
