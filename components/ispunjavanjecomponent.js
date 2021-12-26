@@ -1,12 +1,10 @@
 import { useState, useEffect } from "react";
 
-import { useToken } from "./tokencontext.js";
 import styles from "./ispunjavanecomponent.module.css";
 import { useRouter } from "next/router";
 import { scales } from "../scales.js";
 
 export default function IspunjavanjeComponent(props) {
-  const { token } = useToken();
   const router = useRouter();
 
   const [gender, setGender] = useState("female");
@@ -129,7 +127,6 @@ export default function IspunjavanjeComponent(props) {
         <button
           className="align-center btn-outline"
           onClick={() => {
-            console.log(itemsValue);
             const scaleSums = props.scale.skale.map((item) => 0);
             Object.keys(props.scale.sumsTemplate).forEach((item, key) => {
               let a = 0;
@@ -142,25 +139,7 @@ export default function IspunjavanjeComponent(props) {
             props.setPropsSums(scaleSums);
             props.setPropsAge(age);
             props.setPropsGender(gender);
-            console.log(scaleSums);
-            if (token) {
-              fetch("/api/post-token", {
-                method: "POST",
-                credentials: "same-origin",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  userToken: token,
-                  name: props.name,
-                  sums: scaleSums,
-                }),
-              }).then((response) => {
-                router.push(response.url);
-              });
-            } else {
-              props.setUpisDisplay(false);
-            }
+            props.setUpisDisplay(false);
           }}
         >
           Submit

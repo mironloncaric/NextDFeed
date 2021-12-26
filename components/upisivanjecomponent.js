@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
 
-import { useToken } from "./tokencontext.js";
 import styles from "./ispunjavanecomponent.module.css";
 import { useRouter } from "next/router";
 
 export default function IspunjavanjeComponent(props) {
-  const { token } = useToken();
   const router = useRouter();
 
   const [gender, setGender] = useState("female");
