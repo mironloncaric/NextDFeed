@@ -105,25 +105,6 @@ export default function IspunjavanjeComponent(props) {
             </div>
           </div>
         ))}
-        {!token && (
-          <>
-            <label htmlFor="age">Starost</label>
-            <input
-              name="age"
-              type="number"
-              value={age}
-              onChange={(e) => setAge(e.target.value)}
-            />
-            <select
-              name="gender"
-              value={gender}
-              onChange={(e) => setGender(e.target.value)}
-            >
-              <option value="female">Žensko</option>
-              <option value="male">Muško</option>
-            </select>
-          </>
-        )}
         <button
           className="align-center btn-outline"
           onClick={() => {
