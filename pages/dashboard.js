@@ -13,6 +13,7 @@ export default function Dashboard({ cluster }) {
   const [n, setN] = useState(1);
   const [clusters, setClusters] = useState([]);
   const [tokens, setTokens] = useState([]);
+  const [exportData, setExportData] = useState([]);
 
   useEffect(async () => {
     const response = await fetch("http://localhost:3000/api/get-cluster");
@@ -33,6 +34,28 @@ export default function Dashboard({ cluster }) {
     setTokens(tokenData);
     setClusters(clusterData);
   }, []);
+
+  useEffect(() => {
+    tokens.forEach((token) => {
+      token.forEach((item) => {
+        if (!item.sums || item.sums.length === 0) {
+          console.log(item);
+          setExportData([
+            ...exportData,
+            {
+              id: item._id,
+              userToken: item.userToken,
+              ...item.results,
+            },
+          ]);
+        }
+      });
+    });
+  }, [tokens]);
+
+  useEffect(() => {
+    console.log("Export data: ", exportData);
+  }, [exportData]);
 
   if (status === "loading") {
     return <p>loading...</p>;
@@ -149,7 +172,7 @@ export default function Dashboard({ cluster }) {
                             })}
                           </tr>
                         );
-                      else return;
+                      return;
                     })}
                   <br />
                 </table>

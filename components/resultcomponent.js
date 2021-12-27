@@ -7,16 +7,16 @@ export default function ResultComponent(props) {
     <div className="page-container">
       <h1>{props.scale.skalaIme}</h1>
       {Object.keys(granice).map((item, key) => {
-        if (props.propsSums[key] < granice[item][0])
+        if (props.propsSums[item] < granice[item][0])
           return (
-            <p key={item}>
+            <p key={key}>
               Vaš rezultat je ispodprosječan i spada u prvi kvartil rezultata
               (25% najnižih rezultata za ispitanike vašeg spola i dobi)
             </p>
           );
         else if (
-          props.propsSums[key] >= granice[item][0] &&
-          props.propsSums[key] <= granice[item][2]
+          props.propsSums[item] >= granice[item][0] &&
+          props.propsSums[item] <= granice[item][2]
         )
           return (
             <p key={item}>
@@ -38,7 +38,9 @@ export default function ResultComponent(props) {
           datasets: [
             {
               label: "Prosiječni rezultat",
-              data: props.propsSums,
+              data: Object.keys(props.propsSums).map(
+                (key, item) => props.propsSums[key]
+              ),
               backgroundColor: "lightblue",
             },
             {

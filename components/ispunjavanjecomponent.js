@@ -11,7 +11,7 @@ export default function IspunjavanjeComponent(props) {
 
   const [gender, setGender] = useState("female");
   const [age, setAge] = useState(14);
-  const [sums, setSums] = useState();
+  const [sums, setSums] = useState({});
   const [itemsValue, setItemsValue] = useState(
     Object.keys(props.scale.pitanja).map((item, key) => {
       return 0;
@@ -130,13 +130,13 @@ export default function IspunjavanjeComponent(props) {
           className="align-center btn-outline"
           onClick={() => {
             console.log(itemsValue);
-            const scaleSums = props.scale.skale.map((item) => 0);
+            let scaleSums = {};
             Object.keys(props.scale.sumsTemplate).forEach((item, key) => {
               let a = 0;
               props.scale.sumsTemplate[item].forEach((num) => {
                 a += Number(itemsValue[num - 1]);
               });
-              scaleSums[key] = a;
+              scaleSums[item] = a;
             });
             //setItemsValue(0);
             props.setPropsSums(scaleSums);
