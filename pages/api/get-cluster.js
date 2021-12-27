@@ -10,11 +10,13 @@ export default async function getCluster(req, res) {
     if (user) {
       const clusters = client.db().collection("clusters");
       const result = await clusters.find({ uid: user._id }).toArray();
-      res.json(result);
+      console.log(result);
+      return res.json(result);
     } else {
       return res.status(402).end();
     }
   } catch (err) {
+    console.log(err);
     return res.status(500).end();
   }
 }

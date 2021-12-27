@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 
 import { scales } from "../scales.js";
 
-export default function Dashboard(props) {
+export default function Dashboard({ cluster }) {
   const { data: session, status } = useSession();
   const Router = useRouter();
 
@@ -14,39 +14,25 @@ export default function Dashboard(props) {
   const [clusters, setClusters] = useState([]);
   const [tokens, setTokens] = useState([]);
 
-  useEffect(() => {
-    console.log("lol");
-    fetch("/api/get-cluster", {
-      method: "GET",
-    })
-      .then((res) => res.json())
-      .then((response) => {
-        setClusters(response);
-        response.forEach((item, key) => {
-          fetch("/api/get-tokens", {
-            method: "POST",
-            credentials: "same-origin",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ tokens: item.tokens }),
-          })
-            .then((res) => res.json())
-            .then((response) => {
-              console.log(response, key);
-              const temp = tokens.split();
-              temp[key] = response;
-              setTokens(temp);
-            })
-            .catch((err) => console.log(err));
-        });
-      })
-      .catch((err) => console.log(err));
+  useEffect(async () => {
+    const response = await fetch("http://localhost:3000/api/get-cluster");
+    const clusterData = await response.json();
+    let tokenData = [];
+    for (let i = 0; i < clusterData.length; i++) {
+      const tokens = await fetch("http://localhost:3000/api/get-tokens", {
+        method: "POST",
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ tokens: clusterData[i].tokens }),
+      });
+      let temp = await tokens.json();
+      tokenData.push(temp);
+    }
+    setTokens(tokenData);
+    setClusters(clusterData);
   }, []);
-
-  useEffect(() => {
-    console.log(tokens);
-  }, [tokens]);
 
   if (status === "loading") {
     return <p>loading...</p>;
@@ -137,13 +123,39 @@ export default function Dashboard(props) {
       <br />
       <div>
         {clusters &&
-          clusters.length > 0 &&
-          clusters.map((cluster, key) => (
-            <div key={key}>
-              <h3>{cluster.name}</h3>
-              <span>{key}</span>
-            </div>
-          ))}
+          clusters.map((cluster, key) => {
+            return (
+              <div key={key}>
+                <h3>{cluster.name}</h3>
+                <table>
+                  <tr>
+                    <th>Token</th>
+                    {tokens[key][0].results.map((result, key) => {
+                      return scales[result.name].skale.map((scale, key) => (
+                        <th>{scale}</th>
+                      ));
+                    })}
+                  </tr>
+                  {tokens.length > 0 &&
+                    tokens[key].map((header, key) => {
+                      if (header.results)
+                        return (
+                          <tr>
+                            <td>{header.userToken}</td>
+                            {header.results.map((result, key) => {
+                              return result.sums.map((sum, index) => {
+                                return <td>{sum}</td>;
+                              });
+                            })}
+                          </tr>
+                        );
+                      else return;
+                    })}
+                  <br />
+                </table>
+              </div>
+            );
+          })}
       </div>
     </div>
   );

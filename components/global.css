@@ -153,6 +153,14 @@ input {
     align-items: center;
     height: 90px;
 }
+table, th, td {
+    border: 1px solid white;
+    border-collapse: collapse;
+}
+th, td {
+    background-color: lightblue;
+    padding: 5px 7px;
+}
 @media only screen and (max-width: 750px) {
     .landing-page-poster .info {
 	font-size: 80%;

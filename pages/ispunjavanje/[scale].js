@@ -17,6 +17,7 @@ export default function Ispunjavanje() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    console.log(scales[scale]);
   }, [scale]);
 
   if (upisDisplay) {

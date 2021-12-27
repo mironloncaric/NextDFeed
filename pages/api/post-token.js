@@ -6,16 +6,18 @@ export default async function postToken(req, res) {
     const { userToken, name, sums } = req.body;
     const tokens = client.db().collection("tokens");
     const token = await tokens.findOne({ userToken });
-    const url = token.sums[0];
-    await tokens.updateOne({ _id: token._id }, { $pop: { sums: -1 } });
+    let url = undefined;
     if (sums) {
-      console.log(sums);
+      console.log("hello");
+      await tokens.updateOne({ _id: token._id }, { $pop: { sums: -1 } });
       await tokens.updateOne(
         { _id: token._id },
         { $push: { results: { sums, name } } }
       );
     }
-    if (url) return res.redirect(301, `/ispunjavanje/${url}`);
+    const redirectToken = await tokens.findOne({ _id: token._id });
+    if (redirectToken.sums[0])
+      return res.redirect(301, `/ispunjavanje/${redirectToken.sums[0]}`);
     else return res.redirect(301, "/");
   } catch (err) {
     console.log(err);
